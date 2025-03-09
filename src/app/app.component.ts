@@ -2,10 +2,9 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [RouterOutlet],
-  template: `
+    selector: 'app-root',
+    imports: [RouterOutlet],
+    template: `
     <header>
       <nav class="bg-white-500 text-black border-bottom p-4">
         <ul class="flex justify-between">
@@ -19,13 +18,13 @@ import { RouterOutlet } from '@angular/router';
       <router-outlet></router-outlet>
     </main>
   `,
-  styles: `
+    styles: `
     header,
     main,
     footer {
       padding: 0 2rem;
     }
-  `,
+  `
 })
 export class AppComponent {
   title = 'rest-countries';
