@@ -6,7 +6,9 @@ import { RouterLink } from '@angular/router';
   imports: [RouterLink],
   template: `
     @if(country(); as c) {
-    <div class="bg-white rounded-xl shadow-lg overflow-hidden cursor-pointer">
+    <div
+      class="relative bg-white rounded-xl shadow-lg overflow-hidden cursor-pointer"
+    >
       <img
         class="w-full object-cover"
         [src]="c.flags.svg"
@@ -14,7 +16,12 @@ import { RouterLink } from '@angular/router';
       />
       <div class="p-6 pb-12">
         <h3 class="text-xl font-semibold">
-          <a href="#" [routerLink]="['detail', c.cca2]" (click)="onSelect(c)">
+          <a
+            href="#"
+            [routerLink]="['detail', c.cca2]"
+            (click)="onSelect(c)"
+            class="before:content-[''] before:absolute before:inset-0"
+          >
             {{ c.name.common }}
           </a>
         </h3>
