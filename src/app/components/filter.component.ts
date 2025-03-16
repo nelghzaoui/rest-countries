@@ -1,4 +1,4 @@
-import { Component output } from '@angular/core';
+import { Component, output } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 
