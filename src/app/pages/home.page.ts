@@ -7,17 +7,14 @@ import { SearBarComponent } from '../components/search-bar.component';
 
 @Component({
   template: `
-    <section class="flex flex-col flex-lg-row justify-between pb-8">
+    <section class="flex flex-col lg:flex-row lg:justify-between pb-2 lg:pb-8">
       <search-bar />
       <filter-region />
     </section>
 
-    <section class="flex flex-wrap gap-16 ">
+    <section class="flex flex-col items-center lg:flex-wrap gap-16 ">
       @for(country of (countries$ | async); track country.numericCode) {
-      <country-card
-        [country]="country"
-        class="w-full h-full sm:w-1/2 lg:w-1/4"
-      />
+      <country-card [country]="country" class="w-full h-full lg:w-1/4" />
       }
     </section>
   `,

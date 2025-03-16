@@ -25,7 +25,7 @@ import { MatIconModule } from '@angular/material/icon';
       </nav>
     </header>
 
-    <main class="p-2 lg:px-16">
+    <main class="p-4 lg:px-16">
       <router-outlet></router-outlet>
     </main>
   `,

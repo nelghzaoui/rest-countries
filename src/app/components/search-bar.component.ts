@@ -6,12 +6,30 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'search-bar',
   template: `
-    <mat-form-field class="example-form-field">
-      <mat-label>Search for a country...</mat-label>
-      <input matInput type="search" [(ngModel)]="value" />
+    <mat-form-field class="w-full lg:w-auto" appearance="outline">
+      <input
+        placeholder="Search for a country..."
+        matInput
+        type="search"
+        [(ngModel)]="value"
+      />
     </mat-form-field>
   `,
-  styles: ``,
+  styles: `
+    ::ng-deep .mat-mdc-text-field-wrapper {
+      background-color: white !important;
+      border:1px solid white;
+      border-radius:4px !important;
+      padding:0 2rem !important;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    ::ng-deep .mdc-notched-outline__leading,
+    ::ng-deep .mdc-notched-outline__trailing {
+      display: none !important;
+    }
+
+  `,
   imports: [MatInputModule, MatIconModule, FormsModule],
 })
 export class SearBarComponent {

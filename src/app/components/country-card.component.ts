@@ -4,15 +4,15 @@ import { Component, EventEmitter, input, Output } from '@angular/core';
   selector: 'country-card',
   template: `
     <div
-      class="bg-white rounded-xl shadow-lg"
+      class="bg-white rounded-xl shadow-lg overflow-hidden cursor-pointer"
       (click)="onCountrySelected(country)"
     >
       <img
-        class="w-full object-cover shadow-md"
+        class="w-full object-cover"
         [src]="country().flags.svg"
         [alt]="country().name.common"
       />
-      <div class="p-4">
+      <div class="p-6 pb-12">
         <h3 class="text-xl font-semibold">{{ country().name.common }}</h3>
         <ul class="text-gray-600 mt-2">
           <li>Population: {{ country().population }}</li>
@@ -31,6 +31,7 @@ import { Component, EventEmitter, input, Output } from '@angular/core';
     img {
       max-width: 264px;
       height: 160px;
+      max-height: 160px;
     }
   `,
 })
