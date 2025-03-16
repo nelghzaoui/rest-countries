@@ -46,7 +46,7 @@ import { debounceTime, distinctUntilChanged, Subject, takeUntil } from 'rxjs';
     }
   `,
 })
-export class SearBarComponent implements OnInit, OnDestroy {
+export class SearchBarComponent implements OnInit, OnDestroy {
   search = output<string>();
   searchControl = new FormControl('');
   private destroy$ = new Subject<void>();
