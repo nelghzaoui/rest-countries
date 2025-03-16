@@ -1,5 +1,4 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { AsyncPipe } from '@angular/common';
 import { CountriesService } from '../services/countries.service';
 import { CountryCardComponent } from '../components/country-card.component';
 import { FilterRegionComponent } from '../components/filter.component';
@@ -13,22 +12,17 @@ import { SearBarComponent } from '../components/search-bar.component';
     </section>
 
     <section class="flex flex-col items-center lg:flex-wrap gap-16 ">
-      @for(country of (countries$ | async); track country.numericCode) {
+      @for(country of countries(); track country.numericCode) {
       <country-card [country]="country" class="w-full h-full lg:w-1/4" />
       }
     </section>
   `,
   styles: ``,
-  imports: [
-    CountryCardComponent,
-    AsyncPipe,
-    SearBarComponent,
-    FilterRegionComponent,
-  ],
+  imports: [CountryCardComponent, SearBarComponent, FilterRegionComponent],
 })
 export class HomePage implements OnInit {
   private readonly countriesService = inject(CountriesService);
-  countries$ = this.countriesService.countries$;
+  countries = this.countriesService.countries;
 
   ngOnInit(): void {}
 }
