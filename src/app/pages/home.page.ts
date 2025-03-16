@@ -6,12 +6,12 @@ import { SearchBarComponent } from '../components/search-bar.component';
 
 @Component({
   template: `
-    <section class="flex flex-col lg:flex-row lg:justify-between pb-2 lg:pb-8">
-      <search-bar (search)="onSearch($event)" />
+    <section class="flex flex-col lg:flex-row lg:justify-between pb-2 lg:py-8">
+      <search-bar class="lg:w-2/5" (search)="onSearch($event)" />
       <filter-region (selected)="onFilter($event)" />
     </section>
 
-    <section class="flex flex-col items-center lg:flex-wrap gap-16 ">
+    <section class="flex flex-col items-center gap-16 lg:flex-wrap lg:flex-row">
       @for(country of filteredCountries(); track country.numericCode) {
       <country-card
         [country]="country"
@@ -21,7 +21,12 @@ import { SearchBarComponent } from '../components/search-bar.component';
       }
     </section>
   `,
-  styles: ``,
+  styles: `
+    :host {
+      display: flex;
+      flex-direction: column;
+    }
+  `,
   imports: [CountryCardComponent, SearchBarComponent, FilterRegionComponent],
 })
 export class HomePage {

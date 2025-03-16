@@ -15,7 +15,7 @@ import { debounceTime, distinctUntilChanged, Subject, takeUntil } from 'rxjs';
   selector: 'search-bar',
   imports: [MatInputModule, MatIconModule, ReactiveFormsModule],
   template: `
-    <mat-form-field class="w-full lg:w-auto" appearance="outline">
+    <mat-form-field class="w-full" appearance="outline">
       <mat-icon fontIcon="search" color="primary"></mat-icon>
 
       <input

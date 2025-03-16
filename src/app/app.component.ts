@@ -10,7 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
     >
       <nav class="text-black py-4 px-2 ">
         <ul class="flex justify-between">
-          <li class="bold">Where in the world?</li>
+          <li class="bold lg:text-xl">Where in the world?</li>
           <li class="flex align-items-center justify-start ">
             <mat-icon
               class="mr-2"
@@ -25,7 +25,7 @@ import { MatIconModule } from '@angular/material/icon';
       </nav>
     </header>
 
-    <main class="p-4 lg:px-16">
+    <main class="p-4 lg:px-16 h-full">
       <router-outlet></router-outlet>
     </main>
   `,

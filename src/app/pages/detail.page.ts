@@ -9,51 +9,56 @@ import { ButtonComponent } from '../components/button.component';
   template: `
     <button-link link="/" label="Back" class="pt-6" />
 
-    @if(country(); as c) {
-    <img
-      class="w-full object-cover rounded"
-      [src]="c.flags.svg"
-      [alt]="c.name.common"
-    />
+    <div class="flex flex-col gap-8 lg:flex-row lg:justify-between">
+      @if(country(); as c) {
+      <img
+        class="w-full h-full object-cover rounded"
+        [src]="c.flags.svg"
+        [alt]="c.name.common"
+      />
 
-    <div class="flex flex-col gap-3">
-      <h1 class="text-xl font-semibold">
-        {{ c.name.common }}
-      </h1>
-      <ul class="text-gray-600 mt-2">
-        <li>Native Name: {{ nativeName() }}</li>
-        <li>Population: {{ c.population }}</li>
-        <li>Region: {{ c.region }}</li>
-        @if(c.subregion) {
-        <li>Sub Region: {{ c.subregion }}</li>
-        }
-        <li>Capital: {{ c.capital }}</li>
-      </ul>
+      <div class="lg:flex lg:flex-col lg:gap-8">
+        <h1 class="text-2xl font-semibold">
+          {{ c.name.common }}
+        </h1>
+        <div class="lg:flex w-100 lg:gap-[5rem]">
+          <div class="flex flex-col gap-3">
+            <ul class="text-gray-600 mt-2">
+              <li>Native Name: {{ nativeName() }}</li>
+              <li>Population: {{ c.population }}</li>
+              <li>Region: {{ c.region }}</li>
+              @if(c.subregion) {
+              <li>Sub Region: {{ c.subregion }}</li>
+              }
+              <li>Capital: {{ c.capital }}</li>
+            </ul>
+          </div>
+
+          <ul class="text-gray-600 mt-2">
+            <li>Top Level Domain: {{ c.tld[0] }}</li>
+            <li>Currencies: {{ currency() }}</li>
+            <li>Languages: {{ languages() }}</li>
+          </ul>
+        </div>
+
+        <div class="flex flex-col gap-3 w-full pt-20">
+          <h2>Border Countries:</h2>
+
+          <ul class="flex flex-wrap gap-4">
+            @for(border of c.borders; track border) {
+            <li>
+              <button-link
+                link="../{{ border }}"
+                [label]="border"
+                (click)="onSelect(border)"
+              />
+            </li>
+            }
+          </ul>
+        </div>
+      </div>
+      }
     </div>
-
-    <ul class="text-gray-600 mt-2">
-      <li>Top Level Domain: {{ c.tld[0] }}</li>
-      <li>Currencies: {{ currency() }}</li>
-      <li>Languages: {{ languages() }}</li>
-    </ul>
-
-    <div class="flex flex-col gap-3">
-      <h2>Border Countries:</h2>
-
-      <ul class="flex flex-wrap gap-4">
-        @for(border of c.borders; track border) {
-        <li>
-          <button-link
-            link="../{{ border }}"
-            [label]="border"
-            (click)="onSelect(border)"
-          />
-        </li>
-        }
-      </ul>
-    </div>
-
-    }
   `,
   styles: `
     :host{
@@ -62,7 +67,12 @@ import { ButtonComponent } from '../components/button.component';
       gap: 2rem;
 
       img {
-        max-height: 229px; 
+        max-height: 229px;
+
+        @media (min-width: 768px) {
+          max-width: 560px;
+          max-height: 401px ;
+        }
       }
     }
   `,
