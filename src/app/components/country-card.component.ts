@@ -1,29 +1,33 @@
-import { Component, EventEmitter, input, Output } from '@angular/core';
+import { Component, input, output } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'country-card',
+  imports: [RouterLink],
   template: `
-    <div
-      class="bg-white rounded-xl shadow-lg overflow-hidden cursor-pointer"
-      (click)="onCountrySelected(country)"
-    >
+    @if(country(); as c) {
+    <div class="bg-white rounded-xl shadow-lg overflow-hidden cursor-pointer">
       <img
         class="w-full object-cover"
-        [src]="country().flags.svg"
-        [alt]="country().name.common"
+        [src]="c.flags.svg"
+        [alt]="c.name.common"
       />
       <div class="p-6 pb-12">
-        <h3 class="text-xl font-semibold">{{ country().name.common }}</h3>
+        <h3 class="text-xl font-semibold">
+          <a href="#" [routerLink]="['detail', c.cca2]" (click)="onSelect(c)">
+            {{ c.name.common }}
+          </a>
+        </h3>
         <ul class="text-gray-600 mt-2">
-          <li>Population: {{ country().population }}</li>
-          <li>Region: {{ country().region }}</li>
-          <li>Capital: {{ country().capital }}</li>
+          <li>Population: {{ c.population }}</li>
+          <li>Region: {{ c.region }}</li>
+          <li>Capital: {{ c.capital }}</li>
         </ul>
       </div>
     </div>
+    }
   `,
   styles: `
-
     :host {
       max-width: 264px;
     }
@@ -37,11 +41,11 @@ import { Component, EventEmitter, input, Output } from '@angular/core';
 })
 export class CountryCardComponent {
   country = input<any>();
-  @Output() countrySelected = new EventEmitter<any>();
+  selected = output<any>();
 
   constructor() {}
 
-  onCountrySelected(country: any) {
-    this.countrySelected.emit(country);
+  onSelect(country: any) {
+    this.selected.emit(country);
   }
 }
