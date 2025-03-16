@@ -8,6 +8,7 @@ import { take } from 'rxjs';
 export class CountriesService {
   private readonly http = inject(HttpClient);
   readonly countries = signal<any[]>([]);
+  readonly selectedCountry = signal<any>(null);
 
   constructor() {
     this.loadCountries();

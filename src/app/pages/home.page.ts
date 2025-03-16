@@ -13,7 +13,11 @@ import { SearchBarComponent } from '../components/search-bar.component';
 
     <section class="flex flex-col items-center lg:flex-wrap gap-16 ">
       @for(country of filteredCountries(); track country.numericCode) {
-      <country-card [country]="country" class="w-full h-full lg:w-1/4" />
+      <country-card
+        [country]="country"
+        (selected)="onSelect($event)"
+        class="w-full h-full lg:w-1/4"
+      />
       }
     </section>
   `,
@@ -42,8 +46,12 @@ export class HomePage {
   }
 
   onFilter(region: string) {
-    console.log(region);
-
     this.region.set(region);
+  }
+
+  onSelect(country: any) {
+    console.log(country);
+
+    this.countriesService.selectedCountry.set(country);
   }
 }
