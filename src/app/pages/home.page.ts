@@ -50,8 +50,6 @@ export class HomePage {
   }
 
   onSelect(country: any) {
-    console.log(country);
-
     this.countriesService.selectedCountry.set(country);
   }
 }

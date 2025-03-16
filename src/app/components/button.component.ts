@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 
@@ -12,6 +12,7 @@ import { RouterLink } from '@angular/router';
       <a
         href="#"
         [routerLink]="link()"
+        (click)="onSelect(label())"
         class="before:content-[''] before:absolute before:inset-0"
         >{{ label() }}</a
       >
@@ -22,4 +23,9 @@ import { RouterLink } from '@angular/router';
 export class ButtonComponent {
   link = input<string>();
   label = input<string>();
+  select = output<string>();
+
+  onSelect(value?: string) {
+    this.select.emit(value || '/');
+  }
 }

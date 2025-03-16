@@ -1,4 +1,5 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { CountriesService } from '../services/countries.service';
 import { ButtonComponent } from '../components/button.component';
 
@@ -42,7 +43,11 @@ import { ButtonComponent } from '../components/button.component';
       <ul class="flex flex-wrap gap-4">
         @for(border of c.borders; track border) {
         <li>
-          <button-link [link]="border" [label]="border" />
+          <button-link
+            link="../{{ border }}"
+            [label]="border"
+            (click)="onSelect(border)"
+          />
         </li>
         }
       </ul>
@@ -62,8 +67,10 @@ import { ButtonComponent } from '../components/button.component';
     }
   `,
 })
-export class DetailPage {
+export class DetailPage implements OnInit {
   private readonly countriesService = inject(CountriesService);
+  private readonly route = inject(ActivatedRoute);
+
   readonly country = this.countriesService.selectedCountry;
   readonly nativeName = computed(
     () => (Object.values(this.country().name.nativeName)[0] as any).common
@@ -74,7 +81,15 @@ export class DetailPage {
   readonly languages = computed(() =>
     (Object.values(this.country().languages) as any).join(',')
   );
-  // readonly borderCountries = computed(() => {
 
-  // })
+  ngOnInit() {
+    const cca3 = this.route.snapshot.paramMap.get('id');
+    if (cca3) {
+      this.countriesService.findCountryByCCA3(cca3);
+    }
+  }
+
+  onSelect(cca3: string) {
+    this.countriesService.findCountryByCCA3(cca3);
+  }
 }

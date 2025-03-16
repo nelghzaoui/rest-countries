@@ -14,6 +14,16 @@ export class CountriesService {
     this.loadCountries();
   }
 
+  findCountryByCCA3(cca3: string) {
+    const country = this.countries().find((country) => country.cca3 === cca3);
+
+    if (country) {
+      this.selectedCountry.set(country);
+    }
+
+    return country;
+  }
+
   private loadCountries(): void {
     this.http
       .get<any[]>('https://restcountries.com/v3.1/all')
