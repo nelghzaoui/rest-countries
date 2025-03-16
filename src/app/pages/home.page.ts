@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { CountriesService } from '../services/countries.service';
 import { CountryCardComponent } from '../components/country-card.component';
 import { FilterRegionComponent } from '../components/filter.component';
@@ -7,12 +7,12 @@ import { SearBarComponent } from '../components/search-bar.component';
 @Component({
   template: `
     <section class="flex flex-col lg:flex-row lg:justify-between pb-2 lg:pb-8">
-      <search-bar />
+      <search-bar (search)="onSearch($event)" />
       <filter-region />
     </section>
 
     <section class="flex flex-col items-center lg:flex-wrap gap-16 ">
-      @for(country of countries(); track country.numericCode) {
+      @for(country of searchedCountries(); track country.numericCode) {
       <country-card [country]="country" class="w-full h-full lg:w-1/4" />
       }
     </section>
@@ -20,9 +20,21 @@ import { SearBarComponent } from '../components/search-bar.component';
   styles: ``,
   imports: [CountryCardComponent, SearBarComponent, FilterRegionComponent],
 })
-export class HomePage implements OnInit {
+export class HomePage {
   private readonly countriesService = inject(CountriesService);
-  countries = this.countriesService.countries;
+  private readonly countries = this.countriesService.countries;
+  readonly query = signal('');
+  readonly searchedCountries = computed(() => {
+    const query: string = this.query().toLowerCase();
 
-  ngOnInit(): void {}
+    if (!query) return this.countries();
+
+    return this.countries().filter((country) =>
+      country.name.common.toLowerCase().includes(query)
+    );
+  });
+
+  onSearch(query: string) {
+    this.query.set(query);
+  }
 }

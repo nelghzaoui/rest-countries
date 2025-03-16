@@ -1,17 +1,28 @@
-import { Component } from '@angular/core';
+import {
+  Component,
+  DestroyRef,
+  inject,
+  OnDestroy,
+  OnInit,
+  output,
+} from '@angular/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
-import { FormsModule } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { debounceTime, distinctUntilChanged, Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'search-bar',
+  imports: [MatInputModule, MatIconModule, ReactiveFormsModule],
   template: `
     <mat-form-field class="w-full lg:w-auto" appearance="outline">
+      <mat-icon fontIcon="search" color="primary"></mat-icon>
+
       <input
         placeholder="Search for a country..."
         matInput
         type="search"
-        [(ngModel)]="value"
+        [formControl]="searchControl"
       />
     </mat-form-field>
   `,
@@ -29,9 +40,25 @@ import { FormsModule } from '@angular/forms';
       display: none !important;
     }
 
+    :host ::ng-deep .mat-mdc-form-field-infix {
+      display: flex;
+      gap: 0.5rem;
+    }
   `,
-  imports: [MatInputModule, MatIconModule, FormsModule],
 })
-export class SearBarComponent {
-  value: string = '';
+export class SearBarComponent implements OnInit, OnDestroy {
+  search = output<string>();
+  searchControl = new FormControl('');
+  private destroy$ = new Subject<void>();
+
+  ngOnInit(): void {
+    this.searchControl.valueChanges
+      .pipe(debounceTime(400), distinctUntilChanged(), takeUntil(this.destroy$))
+      .subscribe((value) => this.search.emit(value ?? ''));
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 }
